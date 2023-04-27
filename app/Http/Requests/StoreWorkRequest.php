@@ -26,7 +26,8 @@ class StoreWorkRequest extends FormRequest
         return [
             'name' => 'required|max:150|unique:works,name',
             'description' => 'string',
-            'type_id' => 'nullable|exists:types,id'
+            'type_id' => 'nullable|exists:types,id',
+            'technologies' => 'exists:technologies,id',
         ];
     }
 }

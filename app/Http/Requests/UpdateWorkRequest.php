@@ -31,7 +31,8 @@ class UpdateWorkRequest extends FormRequest
                 Rule::unique('works', 'name')->ignore($this->work)
             ],
             'description' => 'string',
-            'type_id' => 'nullable|exists:types,id'
+            'type_id' => 'nullable|exists:types,id',
+            'technologies' => 'exists:technologies,id',
         ];
     }
 }

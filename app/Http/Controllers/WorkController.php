@@ -6,6 +6,7 @@ use App\Http\Requests\StoreWorkRequest;
 use App\Http\Requests\UpdateWorkRequest;
 use App\Models\Type;
 use App\Models\Work;
+use App\Models\Technology;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -39,6 +40,8 @@ class WorkController extends Controller
     public function create()
     {
         $types = Type::orderBy('name', 'asc')->get();
+        $technologies = Technology::orderBy('name', 'asc')->get();
+
 
         return view('works.create', compact('types'));
     }
@@ -56,6 +59,11 @@ class WorkController extends Controller
         $data['slug'] = Str::slug($data['name']);
 
         $work = Work::create($data);
+
+        if (isset($data['technology'])) {
+            $work->technology()->attach($data['technologies']);
+        }
+
 
         return to_route('works.show', $work);
     }
@@ -80,6 +88,7 @@ class WorkController extends Controller
     public function edit(Work $work)
     {
         $types = Type::orderBy('name', 'asc')->get();
+        $technologies = Technology::orderBy('name', 'asc')->get();
 
         return view('works.edit', compact('work', 'types'));
     }
@@ -100,6 +109,12 @@ class WorkController extends Controller
         }
 
         $work->update($data);
+
+        if (isset($data['technologies'])) {
+            $work->technologies()->sync($data['technologies']);
+        } else {
+            $work->technologies()->sync([]);
+        }
 
         return to_route('works.show', $work);
     }

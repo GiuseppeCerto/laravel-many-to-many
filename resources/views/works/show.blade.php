@@ -13,6 +13,13 @@
                     @endif
                 </h1>
                 <p>/{{ $work->slug }}</p>
+                <div>
+                    @forelse( $work->technologies as $technology )
+                        <span class="badge rounded-pill text-bg-light">{{ $technology->name }}</span>
+                    @empty
+                        -
+                    @endforelse
+                </div>
             </div>
 
             <div class="d-flex">

@@ -32,6 +32,7 @@
             <th>Type</th>
             <th>Description</th>
             <th>Slug</th>
+            <th>Technology</th>
             <th>Creation data</th>
             <th>Change data</th>
           </tr>
@@ -46,8 +47,15 @@
                 <td>{{ $work->type ? $work->type->name : '-' }} </td>
                 <td>{{ $work->description }}</td>
                 <td>{{ $work->slug }}</td>
-                <td>{{ $work->created_at }}</td>
-                <td>{{ $work->updated_at }}</td>
+                <td>
+                  @forelse($work->technology()->orderBy('name','asc')->get() as $technology )
+                    <span class="badge rounded-pill text-bg-light">{{ $technology->name }}</span>
+                  @empty
+                    -
+                  @endforelse
+                </td>
+                <td>{{ $work->created_at->format('d/m/Y') }}</td>
+                <td>{{ $work->updated_at->format('d/m/Y') }}</td>
                 <td>
                     <div class="d-flex gap-2">
                         <a class="btn btn-sm btn-secondary" href="{{ route('works.edit',$work) }}">Edit</a>
