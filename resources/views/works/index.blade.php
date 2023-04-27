@@ -48,7 +48,7 @@
                 <td>{{ $work->description }}</td>
                 <td>{{ $work->slug }}</td>
                 <td>
-                  @forelse($work->technology()->orderBy('name','asc')->get() as $technology )
+                  @forelse($work->technologies()->orderBy('name','asc')->get() as $technology )
                     <span class="badge rounded-pill text-bg-light">{{ $technology->name }}</span>
                   @empty
                     -

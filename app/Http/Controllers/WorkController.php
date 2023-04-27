@@ -43,7 +43,7 @@ class WorkController extends Controller
         $technologies = Technology::orderBy('name', 'asc')->get();
 
 
-        return view('works.create', compact('types'));
+        return view('works.create', compact('types','technologies'));
     }
 
     /**
@@ -90,7 +90,7 @@ class WorkController extends Controller
         $types = Type::orderBy('name', 'asc')->get();
         $technologies = Technology::orderBy('name', 'asc')->get();
 
-        return view('works.edit', compact('work', 'types'));
+        return view('works.edit', compact('work', 'types','technologies'));
     }
 
     /**
