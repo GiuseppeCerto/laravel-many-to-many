@@ -21,4 +21,19 @@ class Work extends Model
     {
         return $this->belongsTo(Type::class);
     }
+
+    public function technology()
+    {
+        return $this->belongsToMany(Technology::class);
+    }
+
+    public function getTechnologyIds()
+    {
+        return $this->technologies->pluck('id')->all();
+    }
+
+    public function getRelatedWorks()
+    {
+        return $this->type()->works()->where('id', '!=', $this->id)->get();
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Technology;
 use App\Models\Type;
 use App\Models\Work;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -19,6 +20,7 @@ class WorkSeeder extends Seeder
     public function run(Faker $faker)
     {
         $type_ids = Type::all()->pluck('id')->all();
+        $technology_ids = Technology::all()->pluck('id')->all();
 
         for ($i = 0; $i < 50; $i++) {
 
@@ -29,6 +31,8 @@ class WorkSeeder extends Seeder
             $work->slug = Str::slug($work->name, '-');
             $work->type_id = $faker->optional()->randomElement($type_ids);
             $work->save();
+
+            $work->technology()->attach($faker->randomElements($technology_ids, rand(0, 5)));
         }
     }
 }
